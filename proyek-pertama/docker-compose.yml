@@ -5,21 +5,11 @@ services:
   # service untuk aplikasi
   item-app:
     # dari image node 14 ringan
-    image: node:14-alpine
+    image: ghcr.io/fikrianggara/item-app:v1
 
-    # install dependency dan build aplikasi
-    command: "npm install --production --unsafe-perm && npm run build"
-
-    # map port yang masuk dari port 80 ke port 80 di container
+    # map port yang masuk dari port 80 ke port 8080 di container
     ports:
-      - 80:80
-
-    # set working directory ke /app
-    working_dir: /app
-
-    # mount volume dari folder ini ke /app di container
-    volumes:
-      - ./:/app
+      - 80:8080
 
     # set environment variable
     environment:
