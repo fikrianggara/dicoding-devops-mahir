@@ -4,7 +4,7 @@ version: "3.7"
 services:
   # service untuk aplikasi
   item-app:
-    # dari image node 14 ringan
+    # tarik dari github package registry
     image: ghcr.io/fikrianggara/item-app:v1
 
     # map port yang masuk dari port 80 ke port 8080 di container
