@@ -1,0 +1,48 @@
+# gunakan versi docker compose 3.7
+version: "3.7"
+
+services:
+  # service untuk aplikasi
+  item-app:
+    # dari image node 14 ringan
+    image: node:14-alpine
+
+    # install dependency dan build aplikasi
+    command: "npm install --production --unsafe-perm && npm run build"
+
+    # map port yang masuk dari port 80 ke port 80 di container
+    ports:
+      - 80:80
+
+    # set working directory ke /app
+    working_dir: /app
+
+    # mount volume dari folder ini ke /app di container
+    volumes:
+      - ./:/app
+
+    # set environment variable
+    environment:
+      NODE_ENV: production
+      DB_HOST: item-db
+
+    # set ketergantungan container,
+    # jalankan item-app ketika item-db berhasil dijalankan
+    depends_on:
+      - item-db
+
+    # restart policy, selalu jalankan ulang container apabila berhenti
+    restart: always
+
+  # service untuk database
+  item-db:
+    # dari image mongo 3
+    image: mongo:3
+
+    # mount volume app-db ke /data/db di container
+    volumes:
+      - app-db:/data/db
+
+# volume untuk database
+volumes:
+  app-db:
